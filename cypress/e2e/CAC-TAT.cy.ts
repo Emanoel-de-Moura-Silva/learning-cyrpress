@@ -1,4 +1,5 @@
 import { delay } from "cypress/types/bluebird";
+import { contains, timers } from "cypress/types/jquery";
 
 describe("Central de Atendimento ao Cliente TAT", () => {
   beforeEach(() => {
@@ -20,8 +21,8 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .type("toma esse erro nos peito");
     cy.get("#phone").should("exist").should("be.visible").type("teste");
     cy.get("#phone-checkbox").click();
-    cy.get('button[type="submit"]').click();
 
+    cy.contains("button", "Enviar").click();
     cy.get(".error").should("be.visible");
   });
   it("limpar os campos ", () => {
@@ -35,5 +36,27 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get("#lastName").clear().should("have.value", "");
     cy.get("#phone").clear().should("have.value", "");
     cy.get("#open-text-area").clear().should("have.value", "");
+  });
+  it("envia o formuário com sucesso usando um comando customizado", () => {
+    cy.fillMandatoryFieldsAndSubmit();
+
+    cy.get("select").select("Blog");
+    cy.get("select").select("Cursos");
+    cy.get("select").select("youtube");
+    cy.get("select").select(3);
+
+    cy.contains("button", "Enviar").click();
+    cy.get(".success").should("be.visible");
+  });
+  it("seleciona um produto (YouTube) por seu texto", () => {
+    cy.get("#product").select("youtube").should("have.value", "youtube");
+  });
+  it("seleciona um produto (Blog) por seu índice", () => {
+    cy.get("select").select(1).should("have.value", "blog");
+  });
+  it.only("marca cada tipo de atendimento", () => {
+    cy.get('input[type="radio"][value="elogio"]', { timeout: 10000 })
+      .check()
+      .should("be.checked");
   });
 });
