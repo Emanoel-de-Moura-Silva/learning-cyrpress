@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Curso 'Cypress, do Zero à Nuvem' da Escola Talking About Testing.",
   "main": "src/index.html",
+  "type": "module",
   "scripts": {
     "cy:open": "cypress open",
     "cy:open:C": "cypress open --config viewportWidth=410  viewportHeight=860",
