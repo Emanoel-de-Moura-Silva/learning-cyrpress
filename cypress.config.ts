@@ -11,4 +11,5 @@ module.exports = defineConfig({
     // supportFile: "cypress/support/e2e.ts", // descomente se necessário
   },
   video: true,
+  projectId: "yfqtr9",
 });
